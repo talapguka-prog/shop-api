@@ -1,0 +1,65 @@
+### Тест 1: тауар жасау -> 201 Created
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "Headphones Z",
+  "description": "Сымсыз құлаққап",
+  "price": 45000,
+  "categoryId": 1,
+  "supplierIds": [1]
+}
+
+### Тест 2: барлық тауар -> 200 OK
+GET http://localhost:8080/api/products
+
+### Тест 3: бар тауар -> 200 OK
+GET http://localhost:8080/api/products/1
+
+### Тест 4: жоқ тауар -> 404 Not Found
+GET http://localhost:8080/api/products/999
+
+### Тест 5: қате деректер -> 400 Bad Request
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "",
+  "price": -100
+}
+
+### Нөлдік баға -> 400
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{ "name": "Zero", "price": 0, "categoryId": 1 }
+
+### Жоқ санат -> 404
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{ "name": "NoCat", "price": 100, "categoryId": 999 }
+
+### Жаңарту (PUT) -> 200
+PUT http://localhost:8080/api/products/1
+Content-Type: application/json
+
+{ "name": "Phone X (updated)", "description": "Жаңартылды", "price": 240000, "categoryId": 1, "supplierIds": [1, 2] }
+
+### Жою -> 204 No Content
+DELETE http://localhost:8080/api/products/2
+
+### Іздеу
+GET http://localhost:8080/api/products/search?name=phone
+
+### Пагинация + сұрыптау
+GET http://localhost:8080/api/products?page=0&size=2&sort=price,desc
+
+### Сүзгі (баға аралығы + санат)
+GET http://localhost:8080/api/products?minPrice=100000&maxPrice=700000&categoryId=1
+
+### Санаттар / жеткізушілер
+GET http://localhost:8080/api/categories
+
+###
+GET http://localhost:8080/api/suppliers
